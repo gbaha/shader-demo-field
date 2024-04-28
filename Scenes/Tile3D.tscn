@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://cv43oalhcpwxe"]
+
+[ext_resource type="Script" path="res://Scripts/Tile3D.cs" id="1_kww6h"]
+[ext_resource type="Shader" path="res://Shaders/SpriteRecolor3D.gdshader" id="2_nvj51"]
+[ext_resource type="Texture2D" uid="uid://cpi27upy7ds7v" path="res://Assets/tiles.png" id="3_88rg2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p834q"]
+size = Vector3(1.9, 1.6, 2.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkpwn"]
+diffuse_mode = 3
+specular_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k5y82"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_rkpwn")
+shader = ExtResource("2_nvj51")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/uv1_scale = Vector3(0.1, 0.25, 1)
+shader_parameter/uv1_offset = Vector3(0, 0.25, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/new_colorR = Color(0, 0, 0, 1)
+shader_parameter/sensitivityR = 0.715
+shader_parameter/new_colorG = Color(0.0823529, 0.176471, 0.286275, 1)
+shader_parameter/sensitivityG = 0.715
+shader_parameter/new_colorB = null
+shader_parameter/sensitivityB = 0.715
+shader_parameter/new_colorGB = Color(1, 0, 0, 1)
+shader_parameter/sensitivityGB = 0.715
+shader_parameter/new_colorRG = Color(0, 0.498039, 0, 1)
+shader_parameter/sensitivityRG = 0.715
+shader_parameter/new_colorRB = Color(0, 0, 0, 0)
+shader_parameter/sensitivityRB = 0.24
+shader_parameter/texture_albedo = ExtResource("3_88rg2")
+
+[sub_resource type="QuadMesh" id="QuadMesh_v8lgf"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_k5y82")
+size = Vector2(1.9, 2.6)
+subdivide_width = 32
+subdivide_depth = 32
+center_offset = Vector3(0, 0.01, 0)
+orientation = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_7v3ls"]
+size = Vector3(1.9, 1.3, 2.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w7opq"]
+albedo_color = Color(0.764706, 0.47451, 0.152941, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_36axx"]
+material = SubResource("StandardMaterial3D_w7opq")
+size = Vector3(1.9, 0.3, 2.6)
+
+[node name="Tile" type="StaticBody3D"]
+script = ExtResource("1_kww6h")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+shape = SubResource("BoxShape3D_p834q")
+
+[node name="TileSymbol" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.8, 0)
+mesh = SubResource("QuadMesh_v8lgf")
+skeleton = NodePath("")
+
+[node name="TileFront" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.15, 0)
+mesh = SubResource("BoxMesh_7v3ls")
+skeleton = NodePath("")
+
+[node name="TileBack" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.65, 0)
+mesh = SubResource("BoxMesh_36axx")
